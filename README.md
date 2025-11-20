@@ -183,5 +183,4 @@ Every run generates timestamped SHA-256 integrity files.
 ---
 
 
-✅ a shorter README
-Just tell me!
+
