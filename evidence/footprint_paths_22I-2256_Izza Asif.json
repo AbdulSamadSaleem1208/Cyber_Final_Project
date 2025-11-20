@@ -1,0 +1,37 @@
+[
+  {
+    "path": ".git",
+    "url": "http://192.168.100.140:8501/.git",
+    "status": 200
+  },
+  {
+    "path": "dashboard",
+    "url": "http://192.168.100.140:8501/dashboard",
+    "status": 200
+  },
+  {
+    "path": "admin",
+    "url": "http://192.168.100.140:8501/admin",
+    "status": 200
+  },
+  {
+    "path": "api",
+    "url": "http://192.168.100.140:8501/api",
+    "status": 200
+  },
+  {
+    "path": "login",
+    "url": "http://192.168.100.140:8501/login",
+    "status": 200
+  },
+  {
+    "path": "robots.txt",
+    "url": "http://192.168.100.140:8501/robots.txt",
+    "status": 200
+  },
+  {
+    "path": "sitemap.xml",
+    "url": "http://192.168.100.140:8501/sitemap.xml",
+    "status": 200
+  }
+]

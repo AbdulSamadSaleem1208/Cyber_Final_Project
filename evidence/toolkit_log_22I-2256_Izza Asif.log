@@ -1,0 +1,30 @@
+{"ts": "2025-11-17T23:29:18.312529Z", "module": "scanner", "target": "127.0.0.1", "ports": [22, 80, 443]}
+{"ts": "2025-11-17T23:29:51.643347Z", "module": "footprint", "action": "paths", "base": "http://127.0.0.1:8000", "out": "evidence\\footprint_paths_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T10:47:37.408170Z", "module": "scanner", "target": "127.0.0.1", "ports": [22, 80, 443]}
+{"ts": "2025-11-20T10:47:56.684573Z", "module": "scanner", "target": "127.0.0.1", "ports": [22, 80, 443]}
+{"ts": "2025-11-20T10:50:02.820541Z", "module": "scanner", "target": "127.0.0.1", "ports": [22, 80, 443]}
+{"ts": "2025-11-20T10:51:30.537010Z", "module": "auth_test", "action": "check_password_strength", "result": {"password": "fast123", "score": 2, "strength": "Medium", "issues": ["Password is less than 8 characters", "Missing uppercase letter", "Missing special character"]}}
+{"ts": "2025-11-20T10:52:57.407045Z", "module": "auth_test", "action": "check_password_strength", "result": {"password": "fast123", "score": 2, "strength": "Medium", "issues": ["Password is less than 8 characters", "Missing uppercase letter", "Missing special character"]}}
+{"ts": "2025-11-20T10:57:15.213092Z", "module": "stress", "action": "run", "summary": {"url": "http://192.168.100.140:8501", "clients": 20, "duration": 5, "ok": 9240, "fail": 0, "total": 9240}}
+{"ts": "2025-11-20T10:58:02.113043Z", "module": "stress", "action": "run", "summary": {"url": "http://127.0.0.1:8000", "clients": 1, "duration": 1, "ok": 0, "fail": 93, "total": 93}}
+{"ts": "2025-11-20T10:58:46.244492Z", "module": "footprint", "action": "paths", "base": " http://192.168.100.140:8501", "out": "evidence\\footprint_paths_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T10:58:51.390119Z", "module": "footprint", "action": "subs", "domain": "lab.local", "out": "evidence\\footprint_subs_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T10:58:58.660688Z", "module": "footprint", "action": "paths", "base": " http://192.168.100.140:8501", "out": "evidence\\footprint_paths_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T10:59:16.351037Z", "module": "stress", "action": "run", "summary": {"url": "http://127.0.0.1:8000", "clients": 1, "duration": 1, "ok": 0, "fail": 94, "total": 94}}
+{"ts": "2025-11-20T11:03:09.798566Z", "module": "footprint", "action": "paths", "base": " http://192.168.100.140:8501", "out": "evidence\\footprint_paths_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T11:03:13.278656Z", "module": "footprint", "action": "paths", "base": " http://192.168.100.140:8501", "out": "evidence\\footprint_paths_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T11:03:17.041867Z", "module": "footprint", "action": "subs", "domain": "lab.local", "out": "evidence\\footprint_subs_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T11:09:08.177457Z", "module": "stress", "action": "run", "summary": {"url": "http://127.0.0.1:8000", "clients": 20, "duration": 5, "ok": 0, "fail": 9180, "total": 9180}}
+{"ts": "2025-11-20T11:22:35.644823Z", "module": "scanner", "target": "http://192.168.100.140:8501", "ports": [22, 80, 443]}
+{"ts": "2025-11-20T11:22:35.761832Z", "module": "scanner", "target": "http://192.168.100.140:8501", "ports": [22, 80, 443]}
+{"ts": "2025-11-20T11:23:07.878262Z", "module": "scanner", "target": " http://192.168.100.140:8501", "ports": [22, 80, 443]}
+{"ts": "2025-11-20T11:23:28.602347Z", "module": "scanner", "target": "127.0.0.1", "ports": [22, 80, 443]}
+{"ts": "2025-11-20T11:23:40.518070Z", "module": "auth_test", "action": "check_password_strength", "result": {"password": "fast123", "score": 2, "strength": "Medium", "issues": ["Password is less than 8 characters", "Missing uppercase letter", "Missing special character"]}}
+{"ts": "2025-11-20T11:24:33.883678Z", "module": "stress", "action": "run", "summary": {"url": "http://192.168.100.140:8501", "clients": 20, "duration": 5, "ok": 9160, "fail": 0, "total": 9160}}
+{"ts": "2025-11-20T11:25:04.855143Z", "module": "footprint", "action": "paths", "base": "http://127.0.0.1:8000", "out": "evidence\\footprint_paths_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T11:25:13.612971Z", "module": "footprint", "action": "paths", "base": "http://192.168.100.140:8501", "out": "evidence\\footprint_paths_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T11:25:19.131034Z", "module": "footprint", "action": "subs", "domain": "lab.local", "out": "evidence\\footprint_subs_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T11:25:35.560339Z", "module": "pcap", "action": "capture", "out": "evidence\\capture_22I-2256_Izza Asif.pcap", "summary_path": "evidence\\pcap_summary_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T11:26:41.399686Z", "module": "reporting", "action": "docx_generated", "out": "evidence\\report_Cyber cracker.docx"}
+{"ts": "2025-11-20T11:26:44.906275Z", "module": "reporting", "action": "generate_manifest", "out": "evidence\\report_manifest_22I-2256_Izza Asif.json"}
+{"ts": "2025-11-20T11:26:47.499251Z", "module": "reporting", "action": "docx_generated", "out": "evidence\\report_Cyber cracker.docx"}

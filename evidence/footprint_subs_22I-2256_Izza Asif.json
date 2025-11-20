@@ -1,0 +1,32 @@
+[
+  {
+    "sub": "dev",
+    "host": "dev.lab.local",
+    "resolved": false
+  },
+  {
+    "sub": "test",
+    "host": "test.lab.local",
+    "resolved": false
+  },
+  {
+    "sub": "staging",
+    "host": "staging.lab.local",
+    "resolved": false
+  },
+  {
+    "sub": "api",
+    "host": "api.lab.local",
+    "resolved": false
+  },
+  {
+    "sub": "www",
+    "host": "www.lab.local",
+    "resolved": false
+  },
+  {
+    "sub": "app",
+    "host": "app.lab.local",
+    "resolved": false
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "team": "Cyber cracker",
+  "reg": "22I-2256_Izza Asif",
+  "items": [
+    {
+      "file": "capture_22I-2256_Izza Asif.pcap",
+      "size": 3067
+    },
+    {
+      "file": "footprint_paths_22I-2256_Izza Asif.json",
+      "size": 734
+    },
+    {
+      "file": "footprint_subs_22I-2256_Izza Asif.json",
+      "size": 511
+    },
+    {
+      "file": "pcap_summary_22I-2256_Izza Asif.json",
+      "size": 104
+    },
+    {
+      "file": "report_Cyber cracker.docx",
+      "size": 36833
+    },
+    {
+      "file": "report_manifest_22I-2256_AbdulSamad.json",
+      "size": 80
+    },
+    {
+      "file": "stress_plot_22I-2256_Izza Asif.png",
+      "size": 11084
+    },
+    {
+      "file": "toolkit_log_22I-2256_AbdulSamad.log",
+      "size": 290
+    },
+    {
+      "file": "toolkit_log_22I-2256_AbdulSamad.sha256",
+      "size": 66
+    },
+    {
+      "file": "toolkit_log_22I-2256_Izza Asif.log",
+      "size": 4753
+    },
+    {
+      "file": "toolkit_log_22I-2256_Izza Asif.sha256",
+      "size": 66
+    }
+  ]
+}
