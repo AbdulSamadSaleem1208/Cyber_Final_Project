@@ -28,7 +28,6 @@ ANIM_HTML = r"""
     .btn { padding:6px 10px; border-radius:6px; background:#021114; color:#00ffd8; border:1px solid rgba(0,255,216,0.2); cursor:pointer; font-weight:700; }
     .controls { display:flex; gap:8px; margin-top:8px; align-items:center; }
     .meta { font-size:12px; color:#9fffe9; margin-left:auto; }
-    /* small responsive tweaks */
     @media (max-width:600px) {
       .pb-wrap { padding:10px; }
       .fake-log { max-height:160px; font-size:11px; }
@@ -70,7 +69,6 @@ ANIM_HTML = r"""
 
 <script>
 (function(){
-  // ASCII art lines
   const ascii = [
 "  ____  _            ____        _          _ _ ",
 " |  _ \\| | __ _  ___| __ )  ___ | |__   ___| | |",
@@ -79,7 +77,6 @@ ANIM_HTML = r"""
 " |_|   |_|\\__,_|\\___|____/ \\___/|_.__/ \\___|_|_|"
   ];
 
-  // Boot messages (typing)
   const boot = [
     "[*] Boot sequence initiated...",
     "[*] Loading modules...",
@@ -96,13 +93,10 @@ ANIM_HTML = r"""
   const stopBtn = document.getElementById('stop-btn');
   const clearBtn = document.getElementById('clear-btn');
 
-  // Ensure elements exist
   if (!bannerEl || !bootEl || !neonBar || !logEl) return;
 
-  // Type ASCII banner instantly (keeps spacing)
   bannerEl.textContent = ascii.join("\n");
 
-  // Typing effect for boot messages
   let bootIndex = 0;
   let charIndex = 0;
   let bootInterval = null;
@@ -119,7 +113,6 @@ ANIM_HTML = r"""
     }, 40);
   }
 
-  // Neon progress simulation
   let progress = 0;
   let progressInterval = null;
   function startProgress() {
@@ -133,7 +126,6 @@ ANIM_HTML = r"""
     }, 150);
   }
 
-  // Fake live logs stream
   const sample = [
     "Initialized module scanner",
     "Socket pool created",
@@ -160,9 +152,7 @@ ANIM_HTML = r"""
       const sev = ["INFO","DBG","WARN","OK","ERR"][Math.floor(Math.random()*5)];
       const txt = sample[Math.floor(Math.random()*sample.length)];
       const line = `${t} [${sev}] -- ${txt}`;
-      // prepend
       logEl.innerHTML = line + '<br>' + logEl.innerHTML;
-      // keep only 200 lines visually
       const lines = logEl.innerHTML.split('<br>');
       if (lines.length > 200) { logEl.innerHTML = lines.slice(0,200).join('<br>'); }
     }, 350 + Math.random()*300);
@@ -171,7 +161,6 @@ ANIM_HTML = r"""
     if (logTimer) { clearInterval(logTimer); logTimer = null; }
   }
 
-  // Buttons
   playBtn.addEventListener('click', ()=> {
     startBoot(); startProgress(); startLogs();
   });
@@ -182,7 +171,6 @@ ANIM_HTML = r"""
     logEl.innerHTML = '[console cleared]';
   });
 
-  // auto-start small animation for UX, after load
   startBoot(); setTimeout(startProgress, 500); setTimeout(startLogs, 700);
 })();
 </script>
@@ -199,20 +187,18 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 # -------------------------
-# Safe import helper (returns module or dummy with __error__)
+# Safe import helper
 # -------------------------
 def safe_import(module_name):
     try:
         return importlib.import_module(module_name)
     except Exception as e:
-        # create a minimal dummy object that carries the import exception for diagnostics
         class _M:
             pass
         m = _M()
         m.__error__ = e
         return m
 
-# backend modules (optional)
 scanner = safe_import("scanner")
 auth_test = safe_import("auth_test")
 stress_mod = safe_import("stress")
@@ -222,7 +208,7 @@ reporting = safe_import("reporting")
 logger_mod = safe_import("logger")
 
 # -------------------------
-# Map expected function names to whatever exists in modules (fallbacks)
+# Map expected function names
 # -------------------------
 def get_callable(mod, *names, fallback=None):
     for n in names:
@@ -230,38 +216,33 @@ def get_callable(mod, *names, fallback=None):
             return getattr(mod, n)
     return fallback
 
-# scanner
 run_scan = get_callable(scanner, "run_scan", "sync_port_scan",
                         fallback=lambda *a, **k: {"error":"scanner module missing"})
 sync_port_scan = get_callable(scanner, "sync_port_scan", fallback=run_scan)
 
-# auth functions
 check_password_strength = get_callable(auth_test, "check_password_strength", "policy_check",
                                        fallback=lambda pw: {"error":"auth module missing"})
 simulate_hash_check = get_callable(auth_test, "simulate_hash_check", "offline_hash_check",
                                    fallback=lambda lst: {"error":"auth module missing"})
 
-# stress
 run_stress_test = get_callable(stress_mod, "run_stress_test", "stress_test",
                               fallback=lambda url, clients, duration: ({"error":"stress module missing"}, None))
 
-# footprint
 run_directory_finder = get_callable(footprint, "run_directory_finder", "check_paths",
                                     fallback=lambda url: {"error":"footprint missing"})
 run_subdomain_finder = get_callable(footprint, "run_subdomain_finder", "probe_subdomains",
                                     fallback=lambda domain: {"error":"footprint missing"})
 
-# pcap
 capture_packets = get_callable(pcap_mod, "capture_packets", "capture_scapy",
                                fallback=lambda *a, **k: (None, {"error":"pcap missing"}))
-analyze_pcap = get_callable(pcap_mod, "analyze_pcap_file", fallback=lambda *a, **k: {"error":"pcap missing"})
+analyze_pcap = get_callable(pcap_mod, "analyze_pcap_file",
+                            fallback=lambda *a, **k: {"error":"pcap missing"})
 
-# reporting
 generate_json_summary = get_callable(reporting, "generate_json_summary", "generate_manifest",
                                      fallback=lambda: {"error":"reporting missing"})
-generate_docx_report = get_callable(reporting, "generate_docx_report", fallback=lambda: {"error":"reporting missing"})
+generate_docx_report = get_callable(reporting, "generate_docx_report",
+                                    fallback=lambda: {"error":"reporting missing"})
 
-# logger tail
 read_log_tail = get_callable(logger_mod, "read_log_tail", "tail_logs",
                              fallback=lambda n=200: "No logs available (logger module missing)")
 
@@ -271,31 +252,25 @@ read_log_tail = get_callable(logger_mod, "read_log_tail", "tail_logs",
 import streamlit as st
 import streamlit.components.v1 as components
 
-# set page config as early as possible
 st.set_page_config(page_title="PayBuddy Toolkit", layout="wide")
 
-# GLOBAL HACKING THEME CSS (streamlit-level)
+# -------------------------
+# GLOBAL Theme CSS
+# -------------------------
 st.markdown(
     """
 <style>
-/* Base / background */
 [data-testid="stAppViewContainer"] {
     background: radial-gradient(ellipse at top left, #001217 0%, #000000 60%);
     color: #00ffd8;
     font-family: "Source Code Pro", monospace;
 }
-
-/* Sidebar */
 [data-testid="stSidebar"] {
     background: linear-gradient(180deg,#040404, #0a0a0a);
     color: #00ffd8;
     border-right: 1px solid rgba(0,255,215,0.06);
 }
-
-/* Titles neon */
 h1, h2, h3 { color: #00ffd8 !important; text-shadow: 0 0 10px rgba(0,255,215,0.25); }
-
-/* Buttons neon */
 .stButton>button {
     background: linear-gradient(90deg,#021114, #001212);
     color: #00ffd8;
@@ -306,14 +281,8 @@ h1, h2, h3 { color: #00ffd8 !important; text-shadow: 0 0 10px rgba(0,255,215,0.2
     font-weight: 700;
 }
 .stButton>button:hover { transform: translateY(-1px); }
-
-/* Inputs */
 input, textarea, [role="textbox"] { background: #000; color: #00ffd8 !important; border: 1px solid rgba(0,255,216,0.2) !important; }
-
-/* Code blocks */
 .stCodeBlock pre, code { background: #000 !important; color: #00ffd8 !important; border-left: 4px solid #00ffd8; }
-
-/* Panels */
 .panel { background: rgba(0,0,0,0.45); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.02); box-shadow: 0 6px 24px rgba(0,0,0,0.5); }
 .badge { display:inline-block; background: rgba(0,255,216,0.06); border: 1px solid rgba(0,255,216,0.12); color: #00ffd8; padding: 4px 8px; border-radius: 999px; font-weight:700; font-size:12px; }
 </style>
@@ -322,13 +291,12 @@ input, textarea, [role="textbox"] { background: #000; color: #00ffd8 !important;
 )
 
 # -------------------------
-# Render animation component
+# Render animation
 # -------------------------
-# Using a full HTML document tends to be more robust in Streamlit's component sandbox.
 components.html(ANIM_HTML, height=420, scrolling=True)
 
 # -------------------------
-# App directories
+# Evidence directories
 # -------------------------
 EVIDENCE_DIR = ROOT / "evidence"
 EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
@@ -337,7 +305,47 @@ PCAP_DIR = EVIDENCE_DIR / "pcaps"; PCAP_DIR.mkdir(exist_ok=True)
 SS_DIR = EVIDENCE_DIR / "screenshots"; SS_DIR.mkdir(exist_ok=True)
 
 # -------------------------
-# Diagnostics + Sidebar
+# Sidebar Legal Training Targets
+# -------------------------
+st.sidebar.markdown("## 🧪 Legal Training Targets")
+
+legal_targets = {
+    "OWASP Juice Shop": "https://juice-shop.herokuapp.com",
+    "WebGoat": "https://webgoat.herokuapp.com/WebGoat",
+    "WebWolf": "https://webgoat.herokuapp.com/WebWolf",
+    "bWAPP": "http://www.itsecgames.com/",
+    "DVWA (local)": "http://localhost/dvwa",
+    "Metasploitable 2 (local VM)": "http://192.168.56.101",
+
+    "TryHackMe – Login": "https://tryhackme.com",
+    "TryHackMe – AttackBox (Browser VM)": "https://tryhackme.com/access",
+    "TryHackMe (VPN Lab IP Required)": "ENTER_YOUR_TUN0_IP",
+
+    "HackTheBox – Main Site": "https://app.hackthebox.com",
+    "HackTheBox – Starting Point": "https://app.hackthebox.com/starting-point",
+    "HackTheBox (VPN Lab IP Required)": "ENTER_HTB_VPN_IP",
+
+    "VulnHub Local VM": "http://192.168.56.102",
+
+    "PortSwigger Web Security Academy": "https://portswigger.net/web-security",
+
+    "Google Gruyere (Web Security Training)": "https://google-gruyere.appspot.com",
+    "PentesterLab Exercises": "https://pentesterlab.com",
+    "OverTheWire Wargames": "https://overthewire.org/wargames",
+    "Root-Me Challenges": "https://www.root-me.org",
+    "CyberSecLabs": "https://www.cyberseclabs.co.uk",
+    "AttackDefense Labs": "https://attackdefense.com",
+}
+
+selected_label = st.sidebar.selectbox("Choose a legal test target", list(legal_targets.keys()))
+selected_url = legal_targets[selected_label]
+
+st.sidebar.markdown("---")
+st.sidebar.warning("⚠ Use this toolkit only on systems you own or have explicit permission to test.")
+st.sidebar.markdown("---")
+
+# -------------------------
+# Diagnostics
 # -------------------------
 with st.expander("Diagnostics (backend import errors)"):
     for name, mod in [
@@ -389,9 +397,10 @@ if menu == "Dashboard":
 # -------------------------
 elif menu == "Port Scanner":
     st.header("Port Scanner")
-    target = st.text_input("Target (IP or hostname)", "127.0.0.1")
+    target = st.text_input("Target (IP or hostname)", selected_url)
     ports = st.text_input("Ports (comma separated)", "22,80,443")
     max_workers = st.slider("Max workers", 1, 200, 50)
+
     if st.button("Start Scan"):
         try:
             ports_list = [int(p.strip()) for p in ports.split(",") if p.strip()]
@@ -402,7 +411,7 @@ elif menu == "Port Scanner":
             with st.spinner("Scanning..."):
                 res = run_scan(target, ports_list, max_workers=max_workers)
             st.json(res)
-            # save evidence
+
             safe_target = target.replace(":", "_").replace("/", "_")
             out = OUTPUT_DIR / f"scan_{int(time.time())}_{safe_target}.json"
             with open(out, "w") as f:
@@ -418,6 +427,7 @@ elif menu == "Password Assessment":
     if st.button("Check strength"):
         res = check_password_strength(pw)
         st.json(res)
+
     st.markdown("---")
     st.subheader("Offline hash simulation")
     file = st.file_uploader("Upload hash list (.txt)", type=["txt"])
@@ -435,20 +445,21 @@ elif menu == "Password Assessment":
 # -------------------------
 elif menu == "Stress Tester":
     st.header("Stress Tester (lab only)")
-    url = st.text_input("Target URL", "http://127.0.0.1:8000")
+    url = st.text_input("Target URL", selected_url)
     clients = st.number_input("Clients", 1, 200, 20)
     duration = st.number_input("Duration (s)", 1, 120, 5)
+
     if st.button("Run test"):
         with st.spinner("Running..."):
             try:
                 out = run_stress_test(url, clients, duration)
-                # run_stress_test may return tuple (summary, figpath) or single dict
                 if isinstance(out, tuple):
                     summary, fig = out
                 else:
                     summary, fig = out, None
             except Exception as e:
                 summary, fig = {"error": str(e)}, None
+
         st.json(summary)
         if fig:
             try:
@@ -461,12 +472,14 @@ elif menu == "Stress Tester":
 # -------------------------
 elif menu == "Footprint":
     st.header("Footprint")
-    base = st.text_input("Base URL", "http://127.0.0.1:8000")
-    domain = st.text_input("Domain", "lab.local")
+    base = st.text_input("Base URL", selected_url)
+    domain = st.text_input("Domain", selected_url)
+
     if st.button("Run path check"):
         with st.spinner("Running path checks..."):
             res = run_directory_finder(base)
         st.json(res)
+
     if st.button("Probe subs"):
         with st.spinner("Probing subs..."):
             res = run_subdomain_finder(domain)
@@ -478,6 +491,7 @@ elif menu == "Footprint":
 elif menu == "Packet Capture":
     st.header("Packet capture")
     secs = st.slider("Duration (s)", 1, 60, 5)
+
     if st.button("Capture"):
         with st.spinner("Capturing..."):
             pcap_file, summary = capture_packets(secs)
@@ -490,8 +504,10 @@ elif menu == "Packet Capture":
 elif menu == "Reporting":
     st.header("Reporting")
     if st.button("Generate manifest (JSON)"):
+
         out = generate_json_summary()
         st.success(f"Generated: {out}")
+
     if st.button("Generate DOCX"):
         out = generate_docx_report()
         st.success(f"Generated: {out}")
@@ -513,7 +529,6 @@ elif menu == "Evidence":
 elif menu == "Toolkit Logs":
     st.header("Toolkit logs (tail)")
     tail = read_log_tail()
-    # if tail is dict/list convert to pretty JSON
     if isinstance(tail, (dict, list)):
         st.json(tail)
     else:
