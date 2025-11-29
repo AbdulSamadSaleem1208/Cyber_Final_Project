@@ -310,32 +310,33 @@ SS_DIR = EVIDENCE_DIR / "screenshots"; SS_DIR.mkdir(exist_ok=True)
 st.sidebar.markdown("## 🧪 Legal Training Targets")
 
 legal_targets = {
-    "OWASP Juice Shop": "https://juice-shop.herokuapp.com",
-    "WebGoat": "https://webgoat.herokuapp.com/WebGoat",
-    "WebWolf": "https://webgoat.herokuapp.com/WebWolf",
-    "bWAPP": "http://www.itsecgames.com/",
-    "DVWA (local)": "http://localhost/dvwa",
-    "Metasploitable 2 (local VM)": "http://192.168.56.101",
+    "OWASP Juice Shop": "juice-shop.herokuapp.com",
+    "WebGoat": "webgoat.herokuapp.com",
+    "WebWolf": "webgoat.herokuapp.com",
+    "bWAPP": "www.itsecgames.com",
+    "DVWA (local)": "localhost",
+    "Metasploitable 2 (local VM)": "192.168.56.101",
 
-    "TryHackMe – Login": "https://tryhackme.com",
-    "TryHackMe – AttackBox (Browser VM)": "https://tryhackme.com/access",
+    "TryHackMe – Login": "tryhackme.com",
+    "TryHackMe – AttackBox": "tryhackme.com",
     "TryHackMe (VPN Lab IP Required)": "ENTER_YOUR_TUN0_IP",
 
-    "HackTheBox – Main Site": "https://app.hackthebox.com",
-    "HackTheBox – Starting Point": "https://app.hackthebox.com/starting-point",
+    "HackTheBox – Main Site": "app.hackthebox.com",
+    "HackTheBox – Starting Point": "app.hackthebox.com",
     "HackTheBox (VPN Lab IP Required)": "ENTER_HTB_VPN_IP",
 
-    "VulnHub Local VM": "http://192.168.56.102",
+    "VulnHub Local VM": "192.168.56.102",
 
-    "PortSwigger Web Security Academy": "https://portswigger.net/web-security",
+    "PortSwigger Web Security Academy": "portswigger.net",
 
-    "Google Gruyere (Web Security Training)": "https://google-gruyere.appspot.com",
-    "PentesterLab Exercises": "https://pentesterlab.com",
-    "OverTheWire Wargames": "https://overthewire.org/wargames",
-    "Root-Me Challenges": "https://www.root-me.org",
-    "CyberSecLabs": "https://www.cyberseclabs.co.uk",
-    "AttackDefense Labs": "https://attackdefense.com",
+    "Google Gruyere": "google-gruyere.appspot.com",
+    "PentesterLab": "pentesterlab.com",
+    "OverTheWire": "overthewire.org",
+    "Root-Me": "www.root-me.org",
+    "CyberSecLabs": "www.cyberseclabs.co.uk",
+    "AttackDefense": "attackdefense.com",
 }
+
 
 selected_label = st.sidebar.selectbox("Choose a legal test target", list(legal_targets.keys()))
 selected_url = legal_targets[selected_label]
